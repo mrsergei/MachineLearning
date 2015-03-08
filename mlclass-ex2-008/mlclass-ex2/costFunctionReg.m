@@ -18,6 +18,13 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+% my g multiplier to exclude theta_0 from regularization
+g = ones(size(theta)); g(1) = 0;
+
+J = (-y'*log(sigmoid(X*theta)) - (1 - y)'*log(1-sigmoid(X*theta)))/m +...
+    (lambda/(2*m))*(theta.*g)'*(theta.*g);
+
+grad = X' * (sigmoid(X*theta) - y)/m +(lambda/m)*theta.*g;
 
 
 

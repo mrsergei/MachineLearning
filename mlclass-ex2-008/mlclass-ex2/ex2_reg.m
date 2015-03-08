@@ -55,7 +55,8 @@ hold off;
 
 % Note that mapFeature also adds a column of ones for us, so the intercept
 % term is handled
-X = mapFeature(X(:,1), X(:,2));
+X clc
+
 
 % Initialize fitting parameters
 initial_theta = zeros(size(X, 2), 1);
