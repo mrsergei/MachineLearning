@@ -62,22 +62,39 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%Y = zeros(m, num_labels);
+
+Y = eye(num_labels);
+Y = Y(y, :);
+
+A1 = [ones(m, 1) X];
+A2 = zeros(m, size(Theta1, 1));
+Z2 = A1 * Theta1';
+A2 = sigmoid(Z2);
+A2 = [ones(m, 1) A2];
+Z3 = A2 * Theta2';
+H = sigmoid(Z3);
 
 
+Theta1 = Theta1(:,2:end); % drop the bias taerms
+Theta2 = Theta2(:,2:end); % drop teh bias terms
+
+J = 1/m * (-Y(:)' * log(H(:)) - (1 - Y(:)') * log(1 - H(:))) + ...
+    lambda/(2*m) * sum([Theta1(:); Theta2(:)].^2);
 
 
+%Backprop:
 
+D3 = H - Y;
+D2 = ((D3*Theta2).*sigmoidGradient(Z2));
 
+Theta1_grad = 1/m * D2' * A1;
+Theta2_grad = 1/m * D3' * A2;
 
+%add regularization:
 
-
-
-
-
-
-
-
-
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + lambda/m * Theta1;
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + lambda/m * Theta2;
 
 
 % -------------------------------------------------------------
