@@ -18,16 +18,14 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
+% my g multiplier to exclude theta_0 from regularization
+g = ones(size(theta)); g(1) = 0;
 
+J = 1/(2*m) * (X * theta - y)' * (X * theta - y) + ...
+    lambda/(2*m)*(theta.*g)'*(theta.*g);
 
-
-
-
-
-
-
-
-
+grad = 1/m * ((X * theta - y)' * X) + ...
+    lambda/m * (theta.*g)';
 
 
 % =========================================================================

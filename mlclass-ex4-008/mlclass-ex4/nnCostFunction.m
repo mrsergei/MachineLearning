@@ -76,11 +76,12 @@ Z3 = A2 * Theta2';
 H = sigmoid(Z3);
 
 
-Theta1 = Theta1(:,2:end); % drop the bias taerms
-Theta2 = Theta2(:,2:end); % drop teh bias terms
+Theta1 = Theta1(:,2:end); 			% drop the bias term
+Theta2 = Theta2(:,2:end); 			% drop the bias term
+Thetas = [Theta1(:); Theta2(:)]; 	% unroll Thetas
 
 J = 1/m * (-Y(:)' * log(H(:)) - (1 - Y(:)') * log(1 - H(:))) + ...
-    lambda/(2*m) * sum([Theta1(:); Theta2(:)].^2);
+    lambda/(2*m) * (Thetas' * Thetas);
 
 
 %Backprop:
